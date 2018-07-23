@@ -31,15 +31,10 @@ namespace OxyPlot.Xamarin.Mac
             return new ScreenPoint (p.X, p.Y);
         }
 
-        /// <summary>
-        /// Converts a <see cref="System.Drawing.PointF" /> to a <see cref="ScreenPoint" />.
-        /// </summary>
-        /// <param name="p">The point to convert.</param>
-		/// <param name="bounds">The bounds of the window.</param> 
-        /// <returns>The converted point.</returns>
-        public static ScreenPoint LocationToScreenPoint (this CGPoint p, CGRect bounds)
+        public static ScreenPoint PositionAsScreenPointRelativeToPlotView (this NSEvent p, PlotView plotView)
         {
-            return new ScreenPoint (p.X, bounds.Height - p.Y);
+            var relativePoint = plotView.ConvertPointFromView(p.LocationInWindow, null);
+            return new ScreenPoint (relativePoint.X, relativePoint.Y);
         }
 
         /// <summary>
@@ -157,33 +152,21 @@ namespace OxyPlot.Xamarin.Mac
             return keys;
         }
 
-		/// <summary>
-		/// Converts a <see cref="NSEvent" /> to a <see cref="OxyMouseDownEventArgs" />.
-		/// </summary>
-		/// <param name="theEvent">The event to convert.</param>
-		/// <param name="bounds">The bounds of the window.</param> 
-		/// <returns>The converted event arguments.</returns>
-        public static OxyMouseDownEventArgs ToMouseDownEventArgs (this NSEvent theEvent, CGRect bounds)
+        public static OxyMouseDownEventArgs ToMouseDownEventArgs (this NSEvent theEvent, PlotView view)
         {
             // https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/Reference/Reference.html
             return new OxyMouseDownEventArgs {
-                Position = theEvent.LocationInWindow.LocationToScreenPoint (bounds),
+                Position = theEvent.PositionAsScreenPointRelativeToPlotView(view),
                 ChangedButton = theEvent.Type.ToButton (),
                 ModifierKeys = theEvent.ModifierFlags.ToModifierKeys (),
                 ClickCount = (int)theEvent.ClickCount,
             };
         }
 
-		/// <summary>
-		/// Converts a <see cref="NSEvent" /> to a <see cref="OxyMouseEventArgs" />.
-		/// </summary>
-		/// <param name="theEvent">The event to convert.</param>
-		/// <param name="bounds">The bounds of the window.</param> 
-		/// <returns>The converted event arguments.</returns>
-        public static OxyMouseEventArgs ToMouseEventArgs (this NSEvent theEvent, CGRect bounds)
+        public static OxyMouseEventArgs ToMouseEventArgs (this NSEvent theEvent, PlotView view)
         {
             return new OxyMouseEventArgs {
-                Position = theEvent.LocationInWindow.LocationToScreenPoint (bounds),
+                Position = theEvent.PositionAsScreenPointRelativeToPlotView(view),
                 ModifierKeys = theEvent.ModifierFlags.ToModifierKeys (),
             };
         }
@@ -194,11 +177,11 @@ namespace OxyPlot.Xamarin.Mac
 		/// <param name="theEvent">The event to convert.</param>
 		/// <param name="bounds">The bounds of the window.</param> 
 		/// <returns>The converted event arguments.</returns>
-        public static OxyMouseWheelEventArgs ToMouseWheelEventArgs (this NSEvent theEvent, CGRect bounds)
+        public static OxyMouseWheelEventArgs ToMouseWheelEventArgs (this NSEvent theEvent, PlotView view)
         {
             return new OxyMouseWheelEventArgs {
                 Delta = (int)theEvent.ScrollingDeltaY,
-                Position = theEvent.LocationInWindow.LocationToScreenPoint (bounds),
+                Position = theEvent.PositionAsScreenPointRelativeToPlotView(view),
                 ModifierKeys = theEvent.ModifierFlags.ToModifierKeys (),
             };
         }
