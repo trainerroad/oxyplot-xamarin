@@ -313,7 +313,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseDown (NSEvent theEvent)
         {
             base.MouseDown (theEvent);
-            this.ActualController.HandleMouseDown (this, theEvent.ToMouseDownEventArgs(this.Bounds));
+            this.ActualController.HandleMouseDown (this, theEvent.ToMouseDownEventArgs(this));
         }
 
 		/// <summary>
@@ -323,7 +323,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseDragged (NSEvent theEvent)
         {
             base.MouseDragged (theEvent);
-            this.ActualController.HandleMouseMove (this, theEvent.ToMouseEventArgs (this.Bounds));
+            this.ActualController.HandleMouseMove (this, theEvent.ToMouseEventArgs (this));
         }
 
 		/// <summary>
@@ -333,7 +333,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseMoved (NSEvent theEvent)
         {
             base.MouseMoved (theEvent);
-            this.ActualController.HandleMouseMove (this, theEvent.ToMouseEventArgs (this.Bounds));
+            this.ActualController.HandleMouseMove (this, theEvent.ToMouseEventArgs (this));
         }
 
 		/// <summary>
@@ -343,7 +343,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseUp (NSEvent theEvent)
         {
             base.MouseUp (theEvent);
-            this.ActualController.HandleMouseUp (this, theEvent.ToMouseEventArgs (this.Bounds));
+            this.ActualController.HandleMouseUp (this, theEvent.ToMouseEventArgs (this));
         }
 
 		/// <summary>
@@ -353,7 +353,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseEntered (NSEvent theEvent)
         {
             base.MouseEntered (theEvent);
-            this.ActualController.HandleMouseEnter (this, theEvent.ToMouseEventArgs (this.Bounds));
+            this.ActualController.HandleMouseEnter (this, theEvent.ToMouseEventArgs (this));
         }
 
 		/// <summary>
@@ -363,7 +363,7 @@ namespace OxyPlot.Xamarin.Mac
         public override void MouseExited (NSEvent theEvent)
         {
             base.MouseExited (theEvent);
-            this.ActualController.HandleMouseLeave (this, theEvent.ToMouseEventArgs (this.Bounds));
+            this.ActualController.HandleMouseLeave (this, theEvent.ToMouseEventArgs (this));
         }
 
 		/// <summary>
@@ -374,7 +374,7 @@ namespace OxyPlot.Xamarin.Mac
         {
             // TODO: use scroll events to pan?
             base.ScrollWheel (theEvent);
-            this.ActualController.HandleMouseWheel (this, theEvent.ToMouseWheelEventArgs (this.Bounds));
+            this.ActualController.HandleMouseWheel (this, theEvent.ToMouseWheelEventArgs (this));
         }
 
 		/// <summary>
